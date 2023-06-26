@@ -17,9 +17,8 @@ file_names = [
     "define_dx_attempt_snomed.sql",
     "define_dx_ideation.sql",
     "define_dx_self_harm.sql",
-
+    "define_dx.sql"
 ]
-
 
 # The following section defines parameters related to exporting study data from
 # your athena database
