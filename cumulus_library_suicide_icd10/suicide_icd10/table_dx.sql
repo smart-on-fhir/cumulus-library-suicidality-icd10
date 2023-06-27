@@ -18,7 +18,7 @@ create TABLE suicide_icd10__dx as
     from  core__condition C
         ,   suicide_icd10__study_period S
         ,   suicide_icd10__define_dx DX
-    where C.cond_code.coding[1].code = DX.code
+    where C.cond_code.coding[1].code = DX.code -- TODO https://github.com/smart-on-fhir/cumulus-library/issues/52
     and   C.encounter_ref = S.encounter_ref
     and   C.subject_ref = S.subject_ref
     order by recorded_month desc, case_subtype, icd10_code
