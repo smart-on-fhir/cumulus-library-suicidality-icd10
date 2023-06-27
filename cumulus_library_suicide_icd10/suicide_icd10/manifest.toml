@@ -29,7 +29,8 @@ file_names = [
 # The following tables will be output to disk when an export is run. In most cases,
 # only count tables should be output in this way.
 export_list = [
-    "template__count_influenza_test_month",
+    "suicide_icd10__count_dx_month",
+    "suicide_icd10__count_study_period_month",
 ]
 
 
