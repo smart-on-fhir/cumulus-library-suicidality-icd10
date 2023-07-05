@@ -10,11 +10,6 @@ create TABLE suicide_icd10__dx as
         , gender
         , race_display
         , age_at_visit
-        , age_group
-        , enc_class_code
-        , doc_type_code
-        , ed_note
-        , period
     from  core__condition C
         ,   suicide_icd10__study_period S
         ,   suicide_icd10__define_dx DX

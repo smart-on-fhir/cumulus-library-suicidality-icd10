@@ -14,9 +14,6 @@ def get_path(filename=None):
     else:
         return os.path.dirname(__file__)
 
-def name_view(view: str, prefix=STUDY_PREFIX) -> str:
-    return f'{prefix}__{view}'
-
 def escape(sql: str) -> str:
     """
     :param sql: SQL potentially containing special chars
