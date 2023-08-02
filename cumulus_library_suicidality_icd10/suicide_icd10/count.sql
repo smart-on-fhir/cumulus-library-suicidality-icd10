@@ -1,5 +1,5 @@
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_dx_week AS 
+CREATE TABLE suicide_icd10__count_dx_week AS 
     with powerset as
     (
         select
@@ -14,11 +14,11 @@ CREATE or replace VIEW suicide_icd10__count_dx_week AS
           cnt_encounter  as cnt 
         , cond_week, dx_subtype, dx_display, doc_ed_note, gender, race_display, age_at_visit, enc_class_code, doc_type_display
     from powerset 
-    WHERE cnt_subject >= 10 
+    WHERE cnt_subject >= 5 
     ORDER BY cnt desc;
 
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_dx_month AS 
+CREATE TABLE suicide_icd10__count_dx_month AS 
     with powerset as
     (
         select
@@ -33,11 +33,11 @@ CREATE or replace VIEW suicide_icd10__count_dx_month AS
           cnt_encounter  as cnt 
         , cond_month, dx_subtype, dx_display, doc_ed_note, gender, race_display, age_at_visit, enc_class_code, doc_type_display
     from powerset 
-    WHERE cnt_subject >= 10 
+    WHERE cnt_subject >= 5 
     ORDER BY cnt desc;
 
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_study_period_week AS 
+CREATE TABLE suicide_icd10__count_study_period_week AS 
     with powerset as
     (
         select
@@ -52,11 +52,11 @@ CREATE or replace VIEW suicide_icd10__count_study_period_week AS
           cnt_encounter  as cnt 
         , enc_start_week, period, gender, age_group, race_display, doc_ed_note, enc_class_code, doc_type_display
     from powerset 
-    WHERE cnt_subject >= 10 
+    WHERE cnt_subject >= 5 
     ORDER BY cnt desc;
 
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_study_period_month AS 
+CREATE TABLE suicide_icd10__count_study_period_month AS 
     with powerset as
     (
         select
@@ -71,5 +71,5 @@ CREATE or replace VIEW suicide_icd10__count_study_period_month AS
           cnt_encounter  as cnt 
         , enc_start_month, period, gender, age_group, race_display, doc_ed_note, enc_class_code, doc_type_display
     from powerset 
-    WHERE cnt_subject >= 10 
+    WHERE cnt_subject >= 5 
     ORDER BY cnt desc;

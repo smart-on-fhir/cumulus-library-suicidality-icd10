@@ -42,35 +42,31 @@ where
 -- ########################################################################
 
 -- suicidality_define_note_types
---
+--#############################
 -- NOTE:149798455   Emergency MD
 -- NOTE:189094716   Psychiatry Evaluation
 -- NOTE:262402257   Psychiatry Evaluation Consultation
 -- NOTE:3710478     Discharge Summary
 
-drop table if exists suicide_icd10__case_note;
+
+--desc suicide_icd10__case_note
+--#############################
+--dx_subtype	     ideation, self-harm, attempt
+--cond_year      	 year of suicidality diagnosis
+--doc_type_code      ED Note, Psych Consult, Discharge (code)
+--doc_type_display   ED Note, Psych Consult, Discharge (human readable)
+--doc_author_date    date of documented evidence of an ED encounter
+--gender             patient gender
+--subject_ref        link to core__patient
+--encounter_ref      link to core__encounter
+--doc_ref            link to core__documentreference
 
 create table suicide_icd10__case_note AS
-select distinct C.*, NOTE.author_date
+select distinct C.*, NOTE.author_date as doc_author_date
 from
   suicide_icd10__case as C
 , core__documentreference as NOTE
-, suicidality_define_note_types T
+, suicide_icd10__define_note T
 where C.doc_type_code = T.from_code
 and C.encounter_ref = NOTE.encounter_ref
 order by C.encounter_ref, NOTE.author_date;
-
--- SELECT note types for Suicidality encounters
-create or replace view suicide_icd10__count_case_note as
-select dx_subtype, doc_type_display, count(distinct doc_ref) as cnt_documents
-from suicide_icd10__case_note
-group by cube(dx_subtype, doc_type_display)
-order by cnt_documents desc;
-
--- ALL note types for Suicidality encounters
-create or replace view suicide_icd10__count_case as
-select dx_subtype, doc_type_display, count(distinct doc_ref) as cnt_documents
-from suicide_icd10__case
-group by cube(dx_subtype, doc_type_display)
-order by cnt_documents desc
-;
