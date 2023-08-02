@@ -21,7 +21,8 @@ file_names = [
     "define_dx.sql",
     "table_study_period.sql",
     "table_dx.sql",
-    "count.sql"
+    "chartreview_case.sql",
+#    "count.sql"
 ]
 
 # The following section defines parameters related to exporting study data from
