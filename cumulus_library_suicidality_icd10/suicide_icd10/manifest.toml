@@ -20,7 +20,8 @@ file_names = [
     "define_dx_self_harm.sql",
     "define_dx.sql",
     "table_study_period.sql",
-    "table_dx.sql"
+    "table_dx.sql",
+    "count.sql"
 ]
 
 # The following section defines parameters related to exporting study data from
