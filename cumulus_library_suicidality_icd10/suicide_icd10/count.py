@@ -17,27 +17,34 @@ def count_dx(duration='week'):
     """
     view_name = table('count_dx', duration)
     from_table = table('dx')
-    cols = [f'recorded_{duration}',
-            'case_subtype',
-            'icd10_code',
+    cols = [f'cond_{duration}',
+            'dx_subtype',
+            'dx_display',
+            'doc_ed_note',
             'gender',
             'race_display',
             'age_at_visit',
             'enc_class_code',
-            'doc_type_code',
-            'ed_note']
+            'doc_type_display']
     return counts.count_encounter(view_name, from_table, cols)
 
 def count_study_period(duration='month'):
     """
-    suicide_icd10__count_study_period_week
-    suicide_icd10__count_study_period_month
-    suicide_icd10__count_study_period_year
+    suicide_icd10__count_study_period_doc_week
+    suicide_icd10__count_study_period_doc_month
+    suicide_icd10__count_study_period_doc_year
     """
-    view_name = table('count_study_period', duration)
+    view_name = table('count_study_period_doc', duration)
     from_table = table('study_period')
-    cols = [f'start_{duration}', 'period',
-            'gender', 'age_group', 'race_display']
+    cols = [f'enc_start_{duration}',
+            'period',
+            'gender',
+            'age_group',
+            'race_display',
+            'doc_ed_note',
+            'enc_class_code',
+            'doc_type_display']
+
     return counts.count_encounter(view_name, from_table, cols)
 
 def concat_view_sql(create_view_list: List[str]) -> str:
@@ -68,6 +75,5 @@ if __name__ == '__main__':
         count_dx('week'),
         count_dx('month'),
         count_study_period('week'),
-        count_study_period('month'),
-        count_study_period('year')
+        count_study_period('month')
     ])
