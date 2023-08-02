@@ -6,12 +6,14 @@ with flat_condition as
 )
     select distinct
         DX.subtype as dx_subtype,
+        DX.system  as dx_system,
         DX.code    as dx_code,
         DX.display as dx_display,
-        DX.system  as dx_system,
-        S.ed_note,
+        concat(DX.code, ' : ', DX.display) as dx_code_display,
+        S.doc_ed_note,
         S.diff_enc_note_days,
         S.period,
+        S.age_group,
         S.age_at_visit,
         S.gender,
         S.race_display,
@@ -19,17 +21,18 @@ with flat_condition as
         S.enc_class_code,
         S.doc_type_code,
         S.doc_type_display,
-        C.recorded_week, -- FHIR Condition
-        C.recorded_month,
-        C.recorded_year,
-        S.start_date, -- FHIR Encounter
-        S.start_week,
-        S.start_month,
-        S.end_date,
-        S.author_date, -- FHIR DocumentReference
-        S.author_week,
-        S.author_month,
-        S.author_year,
+        C.category as cond_category,
+        C.recorded_week as cond_week, -- FHIR Condition
+        C.recorded_month as cond_month,
+        C.recorded_year as cond_year,
+        S.enc_start_date, -- FHIR Encounter
+        S.enc_start_week,
+        S.enc_start_month,
+        S.enc_end_date,
+        S.doc_author_date, -- FHIR DocumentReference
+        S.doc_author_week,
+        S.doc_author_month,
+        S.doc_author_year,
         S.subject_ref,
         S.encounter_ref,
         S.doc_ref
