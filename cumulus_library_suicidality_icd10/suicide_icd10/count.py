@@ -34,7 +34,7 @@ def count_study_period(duration='month'):
     suicide_icd10__count_study_period_doc_month
     suicide_icd10__count_study_period_doc_year
     """
-    view_name = table('count_study_period_doc', duration)
+    view_name = table('count_study_period', duration)
     from_table = table('study_period')
     cols = [f'enc_start_{duration}',
             'period',

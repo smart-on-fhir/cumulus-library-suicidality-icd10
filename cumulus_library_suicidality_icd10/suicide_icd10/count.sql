@@ -37,7 +37,7 @@ CREATE or replace VIEW suicide_icd10__count_dx_month AS
     ORDER BY cnt desc;
 
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_study_period_doc_week AS 
+CREATE or replace VIEW suicide_icd10__count_study_period_week AS 
     with powerset as
     (
         select
@@ -56,7 +56,7 @@ CREATE or replace VIEW suicide_icd10__count_study_period_doc_week AS
     ORDER BY cnt desc;
 
 -- ###########################################################
-CREATE or replace VIEW suicide_icd10__count_study_period_doc_month AS 
+CREATE or replace VIEW suicide_icd10__count_study_period_month AS 
     with powerset as
     (
         select
