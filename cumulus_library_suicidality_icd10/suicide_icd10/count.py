@@ -10,29 +10,51 @@ def table(tablename: str, duration=None) -> str:
     else: 
         return f'{STUDY_PREFIX}__{tablename}'
 
-def count_dx(duration='week'):
+def count_dx(duration='month'):
     """
-    suicide_icd10__count_dx_week
-    suicide_icd10__count_dx_month
+    Encounter Diagnosis, not exactly 'incidence' because DX may not be "new".
+
+    Stratify variables for "documented encounter"
+
+    :return: str suicide_icd10__count_dx_month
     """
     view_name = table('count_dx', duration)
     from_table = table('dx')
     cols = [f'cond_{duration}',
             'dx_subtype',
             'dx_display',
-            'doc_ed_note',
             'gender',
             'race_display',
             'age_at_visit',
             'enc_class_code',
+            'doc_ed_note',
             'doc_type_display']
+    return counts.count_encounter(view_name, from_table, cols)
+
+def count_prevalence(duration='month'):
+    """
+    Percentage of patients with a suicidality diagnosis
+
+    :return: str suicide_icd10__count_prevalence_month
+    """
+    view_name = table('count_prevalence', duration)
+    from_table = table('prevalence')
+    cols = [f'enc_start_{duration}',
+            'dx_subtype',
+            'period',
+            'gender',
+            'age_group',
+            'doc_ed_note',
+            'enc_class_code']
+
     return counts.count_encounter(view_name, from_table, cols)
 
 def count_study_period(duration='month'):
     """
-    suicide_icd10__count_study_period_doc_week
-    suicide_icd10__count_study_period_doc_month
-    suicide_icd10__count_study_period_doc_year
+    Frequency of documented encounters.
+    This is just the *study period* BEFORE selecting for suicidality DX
+
+    :return: str suicide_icd10__count_study_period_month
     """
     view_name = table('count_study_period', duration)
     from_table = table('study_period')
@@ -74,10 +96,8 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
 
 
 if __name__ == '__main__':
-
     write_view_sql([
-        count_dx('week'),
-        count_dx('month'),
-        count_study_period('week'),
-        count_study_period('month')
+        count_dx(),
+        count_prevalence(),
+        count_study_period()
     ])
