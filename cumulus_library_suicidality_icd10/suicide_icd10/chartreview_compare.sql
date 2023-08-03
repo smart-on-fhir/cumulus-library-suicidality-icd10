@@ -1,4 +1,6 @@
-create or replace view suicide_icd10_compare as
+--- TODO: notice this is not completed and should not yet be used for chart selection
+
+create or replace view suicide_icd10__compare as
 select distinct
        C.recorded_year
      , C.cond_code.code
@@ -32,16 +34,3 @@ order by encounter_ref;
 --F32.89 Atypical depression
 --F33.8 Recurrent brief depressive episodes
 --F43.12 Post-traumatic stress disorder, chronic
-
---<View>
---  <Labels name="label" toName="text">
---    <Label value="ideation" background="#ffff00"/>
---    <Label value="self-harm" background="#ff3300"/>
---    <Label value="attempt" background="#993333"/>
---    <Label value="gender-differs-sex" background="#5cd65c"/>
---    <Label value="depression" background="#0073e6"/>
---    <Label value="anxiety" background="#ff9933"/>
---    <Label value="other-mental-cond" background="#cc00cc"/>
---  </Labels>
---  <Text name="text" value="$text"/>
---</View>
