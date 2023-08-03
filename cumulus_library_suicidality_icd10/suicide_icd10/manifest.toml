@@ -12,17 +12,18 @@ study_prefix = "suicide_icd10"
 # tables/view selecting subsets of data from FHIR data, tables/views creating 
 # summary statistics.
 file_names = [
-    "define_study_period.sql",
     "define_age.sql",
+    "define_note.sql",
     "define_dx_attempt.sql",
     "define_dx_attempt_snomed.sql",
     "define_dx_ideation.sql",
     "define_dx_self_harm.sql",
     "define_dx.sql",
+    "define_study_period.sql",
     "table_study_period.sql",
     "table_dx.sql",
     "chartreview_case.sql",
-#    "count.sql"
+    "count.sql"
 ]
 
 # The following section defines parameters related to exporting study data from
