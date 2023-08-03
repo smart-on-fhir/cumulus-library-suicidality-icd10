@@ -21,6 +21,7 @@ def count_dx(duration='month'):
     view_name = table('count_dx', duration)
     from_table = table('dx')
     cols = [f'cond_{duration}',
+            'dx_suicidality',
             'dx_subtype',
             'dx_display',
             'gender',
@@ -40,6 +41,7 @@ def count_prevalence(duration='month'):
     view_name = table('count_prevalence', duration)
     from_table = table('prevalence')
     cols = [f'enc_start_{duration}',
+            'dx_suicidality',
             'dx_subtype',
             'period',
             'gender',

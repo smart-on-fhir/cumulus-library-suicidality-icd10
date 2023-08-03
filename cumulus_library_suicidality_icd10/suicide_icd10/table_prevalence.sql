@@ -2,6 +2,7 @@ drop table if exists suicide_icd10__prevalence;
 
 create TABLE suicide_icd10__prevalence AS
     select distinct
+        case when DX.dx_subtype is not null then 'suicidality' else 'None' end as dx_suicidality,
         coalesce(DX.dx_subtype, 'None') as dx_subtype,
         coalesce(DX.dx_code, 'None') as dx_code,
         coalesce(DX.dx_display, 'None') as dx_display,
