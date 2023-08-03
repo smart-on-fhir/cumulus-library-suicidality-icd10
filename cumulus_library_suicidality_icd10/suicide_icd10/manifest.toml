@@ -22,6 +22,7 @@ file_names = [
     "define_study_period.sql",
     "table_study_period.sql",
     "table_dx.sql",
+    "table_prevalence.sql",
     "chartreview_case.sql",
     "count.sql"
 ]
