@@ -5,8 +5,6 @@ with flat_condition as
     unnest(cond_code.coding) AS t1 (code_coding)
 )
     select distinct
-        case    when DX.subtype is not null
-                then 'suicidality' else 'None' end as dx_suicidality,
         DX.subtype as dx_subtype,
         DX.system  as dx_system,
         DX.code    as dx_code,

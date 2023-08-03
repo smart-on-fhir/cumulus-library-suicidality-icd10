@@ -5,14 +5,14 @@ CREATE TABLE suicide_icd10__count_dx_month AS
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , cond_month, dx_suicidality, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display        
+        , cond_month, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display        
         FROM suicide_icd10__dx
         group by CUBE
-        ( cond_month, dx_suicidality, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display )
+        ( cond_month, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display )
     )
     select
           cnt_encounter  as cnt 
-        , cond_month, dx_suicidality, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display
+        , cond_month, dx_subtype, dx_display, gender, race_display, age_at_visit, enc_class_code, doc_ed_note, doc_type_display
     from powerset 
     WHERE cnt_subject >= 5 
     ORDER BY cnt desc;
