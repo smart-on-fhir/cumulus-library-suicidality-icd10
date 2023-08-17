@@ -24,7 +24,8 @@ file_names = [
     "table_dx.sql",
     "table_prevalence.sql",
     "chartreview_case.sql",
-    "count.sql"
+    "count.sql",
+    "version.sql"
 ]
 
 # The following section defines parameters related to exporting study data from
