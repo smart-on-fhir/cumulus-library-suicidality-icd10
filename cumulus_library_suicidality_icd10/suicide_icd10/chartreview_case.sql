@@ -35,7 +35,7 @@ select distinct
     ,doc.doc_type_display
 from
      combine C
-    ,core_documentreference as doc
+    ,core__documentreference as doc
 where
     C.encounter_ref = doc.encounter_ref;
 
