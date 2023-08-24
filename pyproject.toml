@@ -8,7 +8,7 @@
 name = "cumulus-library-suicidality-icd10"
 # You can leave this alone to start. Only worry about it when you need to create
 # a package for other users
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">= 3.9"
 # If you need python libraries, add them here
 dependencies = [

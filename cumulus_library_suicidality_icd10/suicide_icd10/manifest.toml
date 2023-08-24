@@ -36,6 +36,7 @@ file_names = [
 export_list = [
     "suicide_icd10__count_dx_month",
     "suicide_icd10__count_study_period_month",
+    "suicide_icd10__meta_version",    
 ]
 
 
