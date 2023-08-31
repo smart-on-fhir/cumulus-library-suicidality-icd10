@@ -24,10 +24,13 @@ file_names = [
     "table_dx.sql",
     "table_prevalence.sql",
     "chartreview_case.sql",
-    "count.sql",
     "version.sql"
 ]
 
+[counts_builder_config]
+file_names = [
+    "counts.py"
+]
 # The following section defines parameters related to exporting study data from
 # your athena database
 [export_config]
