@@ -74,4 +74,4 @@ class SuicideICD10CountsBuilder(CountsBuilder):
 
 if __name__ == "__main__":
     builder = SuicideICD10CountsBuilder()
-    builder.write_counts(f"{Path(__file__).resolve().parent}/count.sql")
+    builder.write_counts(f"{Path(__file__).resolve().parent}/counts.sql")
