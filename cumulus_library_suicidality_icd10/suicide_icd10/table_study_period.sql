@@ -8,7 +8,7 @@ create TABLE suicide_icd10__study_period AS
         S.gender,
         S.race_display,
         S.ethnicity_display,
-        S.enc_class_code,
+        S.enc_class_display,
         S.doc_type_code,
         S.doc_type_display,
         S.start_date as enc_start_date, -- FHIR Encounter

@@ -20,7 +20,7 @@ class SuicideICD10CountsBuilder(CountsBuilder):
                 'gender',
                 'race_display',
                 'age_at_visit',
-                'enc_class_code',
+                'enc_class_display',
                 'doc_ed_note',
                 'doc_type_display']
         return self.count_encounter(view_name, from_table, cols)
@@ -40,7 +40,7 @@ class SuicideICD10CountsBuilder(CountsBuilder):
                 'gender',
                 'age_group',
                 'doc_ed_note',
-                'enc_class_code']
+                'enc_class_display']
 
         return self.count_encounter(view_name, from_table, cols)
 
@@ -59,7 +59,7 @@ class SuicideICD10CountsBuilder(CountsBuilder):
                 'age_group',
                 'race_display',
                 'doc_ed_note',
-                'enc_class_code',
+                'enc_class_display',
                 'doc_type_display']
 
         return self.count_encounter(view_name, from_table, cols)

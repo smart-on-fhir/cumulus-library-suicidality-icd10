@@ -13,7 +13,7 @@ create TABLE suicide_icd10__dx as
         S.gender,
         S.race_display,
         S.ethnicity_display,
-        S.enc_class_code,
+        S.enc_class_display,
         S.doc_type_code,
         S.doc_type_display,
         C.code as cond_category,
