@@ -9,6 +9,7 @@ create TABLE suicide_icd10__study_period AS
         S.race_display,
         S.ethnicity_display,
         S.enc_class_code,
+        S.enc_class_display,
         S.doc_type_code,
         S.doc_type_display,
         S.start_date as enc_start_date, -- FHIR Encounter
@@ -21,10 +22,13 @@ create TABLE suicide_icd10__study_period AS
         S.author_year as doc_author_year,
         S.subject_ref,
         S.encounter_ref,
+        e.status,
         S.doc_ref
-    from core__study_period S
-        , suicide_icd10__define_age A
-        , suicide_icd10__define_study_period P
+    from core__study_period AS S,
+        suicide_icd10__define_age AS A,
+        suicide_icd10__define_study_period AS P,
+        core__encounter AS e
     where S.age_at_visit = A.age
       and (S.author_date between P.period_start and P.period_end)
+      and e.encounter_ref = S.encounter_ref
 ;
