@@ -30,7 +30,8 @@ create TABLE suicide_icd10__dx as
         S.doc_author_year,
         S.subject_ref,
         S.encounter_ref,
-        S.doc_ref
+        S.doc_ref,
+        S.status
     from  core__condition C
         ,   suicide_icd10__study_period S
         ,   suicide_icd10__define_dx DX
