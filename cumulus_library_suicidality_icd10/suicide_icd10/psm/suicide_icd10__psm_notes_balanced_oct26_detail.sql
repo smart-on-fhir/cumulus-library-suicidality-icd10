@@ -1,4 +1,4 @@
-create table suicide_icd10__psm_notes_balanced_oct26_detail_labelstudio as
+create table suicide_icd10__psm_notes_balanced_oct26_detail as
 WITH
 Cohort as (
     select distinct
@@ -19,6 +19,7 @@ CaseDef as (
             Cohort.dx_suicidality,  Cohort.dx_subtype,      Cohort.dx_code, Cohort.label
     from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Cohort
     where   PSM.subject_ref = Cohort.subject_ref
+    and     PSM.encounter_ref = Cohort.encounter_ref
     and     PSM.is_case
 ),
 CaseMatched as (
@@ -28,6 +29,7 @@ CaseMatched as (
             Cohort.label
     from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Cohort
     where   PSM.matched_ref = Cohort.subject_ref
+    and     PSM.encounter_ref = Cohort.encounter_ref
     and     NOT PSM.is_case
 ),
 Merged as (
@@ -40,29 +42,30 @@ Present as (
         Merged.subject_ref,     Merged.enc_start_date,  Merged.encounter_ref,
         Merged.dx_suicidality,  Merged.dx_subtype,      Merged.dx_code,
     case
-        when    dx_code in ('Z91.5', 'Z91.51', 'Z91.52') then 'action-past'
+        when    dx_code in ('Z91.5', 'Z91.51', 'Z91.52') then 'action-past'     -- history of self harm
+        when    dx_code in ('T14.91XD') then 'action-past-present'      -- subsequent suicide attempt
         else    concat(Merged.label, '-present') end as label
     from Merged
-),
-History as (
-    select distinct
-        Present.subject_ref,     Present.enc_start_date,    Present.encounter_ref,
-        Previous.dx_suicidality, Previous.dx_subtype,       Previous.dx_code,
-        concat(Previous.label, '-past') as label
-    from    Merged as Previous, Present
-    where   Previous.dx_suicidality
-    and     Previous.subject_ref = Present.subject_ref
-    and     date(Previous.enc_start_date) < date(Present.enc_start_date)
-),
-HPI as (
-    select * from Present
-    UNION
-    select * from History
 )
+--Previous as (
+--    select distinct
+--        Present.subject_ref,     Present.enc_start_date,    Present.encounter_ref,
+--        Previous.dx_suicidality, Previous.dx_subtype,       Previous.dx_code,
+--        concat(Previous.label, '-previous') as label
+--    from    Merged as Previous, Present
+--    where   Previous.dx_suicidality
+--    and     Previous.subject_ref = Present.subject_ref
+--    and     date(Previous.enc_start_date) < date(Present.enc_start_date)
+--),
+--HPI as (
+--    select * from Present
+--    UNION
+--    select * from Previous
+--)
 select distinct
             subject_ref,    encounter_ref,   enc_start_date,
             dx_suicidality, dx_subtype,      dx_code,
             label
-from HPI
+from Present
 order by subject_ref, enc_start_date, encounter_ref, label, dx_subtype, dx_code
 ;
