@@ -1,8 +1,8 @@
-create table suicide_icd10__psm_notes_balanced_oct26_detail as
+create table suicide_icd10__psm_notes_balanced_oct26_detail_jan24 as
 WITH
-Cohort as (
+Prevalence as (
     select distinct
-            subject_ref,    encounter_ref,   enc_start_date,
+            subject_ref,    encounter_ref,
             dx_suicidality, dx_subtype,     dx_code,
             case
             when dx_subtype = 'None'        then 'None'
@@ -11,61 +11,74 @@ Cohort as (
             when dx_subtype = 'self_harm'   then 'action'
             else 'impossible' end as label
     from    suicide_icd10__prevalence
-    order by subject_ref,    encounter_ref,   enc_start_date
+    order by subject_ref,    encounter_ref
 ),
+-- PSM.subject_ref "patient has suicidality"
 CaseDef as (
     select distinct
-            Cohort.subject_ref,     Cohort.encounter_ref,   Cohort.enc_start_date,
-            Cohort.dx_suicidality,  Cohort.dx_subtype,      Cohort.dx_code, Cohort.label
-    from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Cohort
-    where   PSM.subject_ref = Cohort.subject_ref
-    and     PSM.encounter_ref = Cohort.encounter_ref
+            Prevalence.subject_ref,     Prevalence.encounter_ref,
+            Prevalence.dx_suicidality,  Prevalence.dx_subtype,      Prevalence.dx_code,
+            Prevalence.label
+    from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Prevalence
+    where   PSM.subject_ref = Prevalence.subject_ref
+    and     PSM.encounter_ref = Prevalence.encounter_ref
     and     PSM.is_case
 ),
+-- PSM.matched_ref "case matched controls"
 CaseMatched as (
     select distinct
-            Cohort.subject_ref,     Cohort.encounter_ref,   Cohort.enc_start_date,
-            Cohort.dx_suicidality,  Cohort.dx_subtype,      Cohort.dx_code,
-            Cohort.label
-    from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Cohort
-    where   PSM.matched_ref = Cohort.subject_ref
-    and     PSM.encounter_ref = Cohort.encounter_ref
+            Prevalence.subject_ref,     Prevalence.encounter_ref,
+            Prevalence.dx_suicidality,  Prevalence.dx_subtype,      Prevalence.dx_code,
+            Prevalence.label
+    from    suicide_icd10__psm_notes_balanced_oct26 as PSM, Prevalence
+    where   PSM.matched_ref = Prevalence.subject_ref
+    and     PSM.encounter_ref = Prevalence.encounter_ref
     and     NOT PSM.is_case
 ),
-Merged as (
-    select distinct * from CaseDef
-    union
-    select distinct * from CaseMatched
-),
-Present as (
+CasePastPresent as (
     select distinct
-        Merged.subject_ref,     Merged.enc_start_date,  Merged.encounter_ref,
-        Merged.dx_suicidality,  Merged.dx_subtype,      Merged.dx_code,
+        CaseDef.subject_ref,     CaseDef.encounter_ref,
+        CaseDef.dx_suicidality,  CaseDef.dx_subtype,      CaseDef.dx_code,
     case
         when    dx_code in ('Z91.5', 'Z91.51', 'Z91.52') then 'action-past'     -- history of self harm
-        when    dx_code in ('T14.91XD') then 'action-past-present'      -- subsequent suicide attempt
-        else    concat(Merged.label, '-present') end as label
-    from Merged
+        when    (dx_code like 'T%D') or (dx_code like 'X%D')    then 'action-past-present'  -- subsequent suicide attempt, and other codes for subsequent encounter
+        when    (dx_code like 'T%S') or (dx_code like 'X%S')    then 'action-past-present'  -- subsequent encounter
+        else    concat(CaseDef.label, '-present') end as label
+    from CaseDef
+),
+ActionPast as (
+    select distinct
+        subject_ref, encounter_ref, dx_suicidality, dx_subtype, dx_code, 'action-past' as label
+    from CasePastPresent
+    where label in ('action-past-present', 'action-past')
+),
+ActionPresent as (
+    select distinct
+        subject_ref, encounter_ref, dx_suicidality, dx_subtype, dx_code, 'action-present' as label
+    from CasePastPresent
+    where label in ('action-past-present', 'action-present')
+),
+Actions as (
+    select distinct * from ActionPast
+    union
+    select distinct * from ActionPresent
+),
+Ideations as (
+    select distinct
+        subject_ref, encounter_ref, dx_suicidality, dx_subtype, dx_code, label
+    from CasePastPresent
+    where label in ('ideation-present', 'ideation-past')
+),
+Cohort as (
+    select distinct * from CaseMatched
+    union
+    select distinct * from Actions
+    union
+    select distinct * from Ideations
 )
---Previous as (
---    select distinct
---        Present.subject_ref,     Present.enc_start_date,    Present.encounter_ref,
---        Previous.dx_suicidality, Previous.dx_subtype,       Previous.dx_code,
---        concat(Previous.label, '-previous') as label
---    from    Merged as Previous, Present
---    where   Previous.dx_suicidality
---    and     Previous.subject_ref = Present.subject_ref
---    and     date(Previous.enc_start_date) < date(Present.enc_start_date)
---),
---HPI as (
---    select * from Present
---    UNION
---    select * from Previous
---)
 select distinct
-            subject_ref,    encounter_ref,   enc_start_date,
-            dx_suicidality, dx_subtype,      dx_code,
-            label
-from Present
-order by subject_ref, enc_start_date, encounter_ref, label, dx_subtype, dx_code
+    subject_ref, encounter_ref, dx_suicidality, dx_subtype, dx_code,
+    NULLIF(label, 'None-present') as label
+from Cohort
+order by subject_ref, encounter_ref, label, dx_subtype, dx_code
 ;
