@@ -78,7 +78,7 @@ Cohort as (
 )
 select distinct
     subject_ref, encounter_ref, dx_suicidality, dx_subtype, dx_code,
-    NULLIF(label, 'None-present') as label
+    NULLIF(label, 'None') as label
 from Cohort
 order by subject_ref, encounter_ref, label, dx_subtype, dx_code
 ;
