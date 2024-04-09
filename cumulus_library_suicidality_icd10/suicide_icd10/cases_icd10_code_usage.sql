@@ -1,5 +1,5 @@
 create table suicide_icd10__code_usage as
-select dx_subtype, dx_code_display, count(encounter_ref) as cnt_encounter
+select dx_subtype, dx_code_display, count(distinct encounter_ref) as cnt_encounter
 from suicide_icd10__prevalence
 group by cube(dx_subtype, dx_code_display)
 order by cnt_encounter desc
