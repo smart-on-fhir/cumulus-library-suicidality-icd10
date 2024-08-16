@@ -1,5 +1,5 @@
 from pathlib import Path
-from cumulus_library.schema.counts import CountsBuilder
+from cumulus_library.statistics.counts import CountsBuilder
 
 class SuicideICD10CountsBuilder(CountsBuilder):
     display_text = "Creating Suicide ICD10 counts..."
@@ -65,7 +65,7 @@ class SuicideICD10CountsBuilder(CountsBuilder):
         return self.count_encounter(view_name, from_table, cols)
 
 
-    def prepare_queries(self, cursor=None, schema=None):
+    def prepare_queries(self, *args,**kwargs):
         self.queries=[
             self.count_dx(),
             self.count_prevalence(),

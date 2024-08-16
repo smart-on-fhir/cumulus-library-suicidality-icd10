@@ -17,9 +17,9 @@ create TABLE suicide_icd10__dx as
         S.doc_type_code,
         S.doc_type_display,
         C.code as cond_category,
-        C.recorded_week as cond_week, -- FHIR Condition
-        C.recorded_month as cond_month,
-        C.recorded_year as cond_year,
+        C.recordeddate_week as cond_week, -- FHIR Condition
+        C.recordeddate_month as cond_month,
+        C.recordeddate_year as cond_year,
         S.enc_start_date, -- FHIR Encounter
         S.enc_start_week,
         S.enc_start_month,
@@ -30,7 +30,7 @@ create TABLE suicide_icd10__dx as
         S.doc_author_year,
         S.subject_ref,
         S.encounter_ref,
-        S.doc_ref,
+        S.documentreference_ref,
         S.status
     from  core__condition C
         ,   suicide_icd10__study_period S
@@ -38,5 +38,5 @@ create TABLE suicide_icd10__dx as
     where C.code = DX.code
     and   C.encounter_ref = S.encounter_ref
     and   C.subject_ref = S.subject_ref
-    order by recorded_month desc, subtype, dx_code
+    order by recordeddate_month desc, subtype, dx_code
 ;
