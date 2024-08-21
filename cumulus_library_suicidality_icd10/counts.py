@@ -1,7 +1,8 @@
-from pathlib import Path
-from cumulus_library.schema.counts import CountsBuilder
+import pathlib
 
-class SuicideICD10CountsBuilder(CountsBuilder):
+import cumulus_library
+
+class SuicideICD10CountsBuilder(cumulus_library.CountsBuilder):
     display_text = "Creating Suicide ICD10 counts..."
 
     def count_dx(self, duration='month'):
@@ -65,7 +66,7 @@ class SuicideICD10CountsBuilder(CountsBuilder):
         return self.count_encounter(view_name, from_table, cols)
 
 
-    def prepare_queries(self, cursor=None, schema=None):
+    def prepare_queries(self, *args,**kwargs):
         self.queries=[
             self.count_dx(),
             self.count_prevalence(),
@@ -74,4 +75,4 @@ class SuicideICD10CountsBuilder(CountsBuilder):
 
 if __name__ == "__main__":
     builder = SuicideICD10CountsBuilder()
-    builder.write_counts(f"{Path(__file__).resolve().parent}/counts.sql")
+    builder.write_counts(f"{pathlib.Path(__file__).resolve().parent}/counts.sql")

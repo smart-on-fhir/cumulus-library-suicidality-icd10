@@ -30,9 +30,9 @@ with ED as
 )
 select distinct
      C.dx_subtype, C.cond_year, C.gender
-    ,C.subject_ref, C.encounter_ref, doc.doc_ref
-    ,doc.doc_type_code
-    ,doc.doc_type_display
+    ,C.subject_ref, C.encounter_ref, doc.documentreference_ref
+    ,doc.type_code
+    ,doc.type_display
 from
      combine C
     ,core__documentreference as doc
@@ -53,20 +53,20 @@ where
 --#############################
 --dx_subtype	     ideation, self-harm, attempt
 --cond_year      	 year of suicidality diagnosis
---doc_type_code      ED Note, Psych Consult, Discharge (code)
---doc_type_display   ED Note, Psych Consult, Discharge (human readable)
+--type_code      ED Note, Psych Consult, Discharge (code)
+--type_display   ED Note, Psych Consult, Discharge (human readable)
 --doc_author_date    date of documented evidence of an ED encounter
 --gender             patient gender
 --subject_ref        link to core__patient
 --encounter_ref      link to core__encounter
---doc_ref            link to core__documentreference
+--documentreference_ref            link to core__documentreference
 
 create table suicide_icd10__case_note AS
-select distinct C.*, NOTE.author_date as doc_author_date
+select distinct C.*, NOTE.author_day as doc_author_date
 from
   suicide_icd10__case as C
 , core__documentreference as NOTE
 , suicide_icd10__define_note T
-where C.doc_type_code = T.from_code
+where C.type_code = T.from_code
 and C.encounter_ref = NOTE.encounter_ref
-order by C.encounter_ref, NOTE.author_date;
+order by C.encounter_ref, NOTE.author_day;

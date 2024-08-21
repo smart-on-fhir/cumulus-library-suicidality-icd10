@@ -8,14 +8,13 @@
 name = "cumulus-library-suicidality-icd10"
 # You can leave this alone to start. Only worry about it when you need to create
 # a package for other users
-version = "0.1.2"
-requires-python = ">= 3.9"
+requires-python = ">= 3.11"
 # If you need python libraries, add them here
 dependencies = [
     # we'll try to keep this template up to date, but it's recommended to use the
     # minor version of cumulus-library
-    "cumulus-library >= 1.4.0",
-    "sqlfluff == 2.0.2"
+    "cumulus-library >= 3, <4",
+    "sqlfluff > 3"
 ]
 # You can alter this to discuss your study specifics
 description = "Validation of ICD-10 code usage of Suicidality Cases Compared to Patient Chart Review"
@@ -27,7 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-
+dynamic=["version"]
 [project.urls]
 Home = "https://smarthealthit.org/cumulus-a-universal-sidecar-for-a-smart-learning-healthcare-system/"
 Documentation = "https://docs.smarthealthit.org/cumulus/"
