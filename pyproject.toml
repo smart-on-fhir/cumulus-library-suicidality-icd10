@@ -8,12 +8,12 @@
 name = "cumulus-library-suicidality-icd10"
 # You can leave this alone to start. Only worry about it when you need to create
 # a package for other users
-requires-python = ">= 3.1"
+requires-python = ">= 3.11"
 # If you need python libraries, add them here
 dependencies = [
     # we'll try to keep this template up to date, but it's recommended to use the
     # minor version of cumulus-library
-    "cumulus-library >= 3",
+    "cumulus-library >= 3, <4",
     "sqlfluff > 3"
 ]
 # You can alter this to discuss your study specifics
