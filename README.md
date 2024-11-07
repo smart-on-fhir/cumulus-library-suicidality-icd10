@@ -2,26 +2,23 @@
 
 This study repository includes:
 
-* **Suicidality ICD10 case definition** (SQL on FHIR) 
-* [Propensity Score Matching](https://github.com/smart-on-fhir/cumulus-library/blob/main/tests/test_psm.py) (PSM) to select "case matched comparators"
-* [Chart Review](https://docs.smarthealthit.org/cumulus/chart-review/) software for reproducing results
+* **Suicidality ICD10 case definition** (SQL) 
 * **Supplement**   
   1. Suicidality ICD10 Case Definition (XLS/TSV)
   2. Propensity Score Matching (Word/PDF)
   3. Suicidality Chart Review Guidelines (Word/PDF)
   4. Additional Statistical Measures (Word/PDF)
-
-All patient data and were made available by [Cumulus](https://smarthealthit.org/cumulus-a-universal-sidecar-for-a-smart-learning-healthcare-system/) at Boston Children's Hospital.
-
-For more information, [browse the Cumulus library documentation](https://docs.smarthealthit.org/cumulus/library).
-
+  
 ## Usage
 
-To install the module, run `git clone git@github.com:smart-on-fhir/cumulus-library-suicidality-icd10.git`.
-
-To install the module, run `pip install -e .`.
+To install the module, run `pip install cumulus-library-suicidality-icd10`.
 
 This will add a `cumulus-library-suicidality-icd10` study target to `cumulus-library`.
+
+This study is built using SMART Cumulus:  
+* [Cumulus Library](https://docs.smarthealthit.org/cumulus/library) SQL queries of patient FHIR data
+* [Chart Review](https://docs.smarthealthit.org/cumulus/chart-review/) software for subject matter experts
+* [Propensity Score Matching](https://docs.smarthealthit.org/cumulus/library/statistics/propensity-score-matching.html) (PSM) to select "case matched comparators"
 
 ## Publication
 
