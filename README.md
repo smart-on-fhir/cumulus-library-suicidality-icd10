@@ -16,8 +16,8 @@ To install the module, run `pip install cumulus-library-suicidality-icd10`.
 This will add a `cumulus-library-suicidality-icd10` study target to `cumulus-library`.
 
 This study is built using SMART Cumulus:  
-* [Cumulus Library](https://docs.smarthealthit.org/cumulus/library) SQL queries of patient FHIR data
-* [Chart Review](https://docs.smarthealthit.org/cumulus/chart-review/) software for subject matter experts
+* [Cumulus Library](https://docs.smarthealthit.org/cumulus/library) templates for "SQL on FHIR"
+* [Chart Review](https://docs.smarthealthit.org/cumulus/chart-review/) packages for subject matter experts to label "ground truth"
 * [Propensity Score Matching](https://docs.smarthealthit.org/cumulus/library/statistics/propensity-score-matching.html) (PSM) to select "case matched comparators"
 
 ## Publication
