@@ -4,7 +4,11 @@ import cumulus_library
 
 class SuicideICD10CountsBuilder(cumulus_library.CountsBuilder):
     display_text = "Creating Suicide ICD10 counts..."
-
+    
+    def __init__(self, study_prefix: str | None = None):
+        super().__init__()
+        self.study_prefix = "suicide_icd10"
+    
     def count_dx(self, duration='month'):
         """
         Encounter Diagnosis, not exactly 'incidence' because DX may not be "new".
