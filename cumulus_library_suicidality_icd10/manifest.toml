@@ -13,7 +13,6 @@ file_names = [
     "table_study_period.sql",
     "table_dx.sql",
     "table_prevalence.sql",
-    #"chartreview_case.sql",
     "version.sql",
     "counts.py"
 ]
